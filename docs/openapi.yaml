@@ -1,0 +1,2297 @@
+openapi: 3.0.1
+info:
+  title: FacturaSoft
+  description: DocumentaciÃ³n API FacturaciÃ³n ElectrÃ³nica
+  version: 1.0.0
+servers:
+  - url: https://api.abitmedia.cloud/facturasoft/v1
+    description: Api FacturaciÃ³n
+paths:
+  /invoices:
+    post:
+      tags:
+        - Facturas
+      summary: Crear factura
+      description: Crea una factura y envÃ­a al SRI
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateInvoice"
+        required: true
+      responses:
+        "201":
+          description: Factura creada y enviada con Ã©xito
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SuccessInvoice"
+        "400":
+          description: PeticiÃ³n mal realizada
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BadRequest"
+        "401":
+          description: AutenticaciÃ³n incorrecta
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Unauthorized"
+        "404":
+          description: Recurso no encontrado
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/NotFound"
+        "422":
+          description: ValidaciÃ³n de datos
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ValidationFailed"
+        "500":
+          description: Error en el servidor
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ServerError"
+      security:
+        - bearerAuth: []
+    get:
+      tags:
+        - Facturas
+      summary: InformaciÃ³n de la factura
+      description: Retorna la informaciÃ³n de la factura donde se puede validar el estado de la misma
+      parameters:
+        - name: integration
+          in: query
+          description: ParÃ¡metro para la integraciÃ³n enviar true
+          required: true
+          schema:
+            type: boolean
+          example: true
+        - name: authorization_number
+          in: query
+          description: Clave de autorizaciÃ³n
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Retorna la informaciÃ³n de la factura
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Invoice"
+        "400":
+          description: PeticiÃ³n mal realizada
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BadRequest"
+        "401":
+          description: AutenticaciÃ³n incorrecta
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Unauthorized"
+        "404":
+          description: Recurso no encontrado
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/NotFound"
+        "500":
+          description: Error en el servidor
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ServerError"
+      security:
+        - bearerAuth: []
+  /credit-notes:
+    post:
+      tags:
+        - Notas de crÃ©dito
+      summary: Crear nota de crÃ©dito
+      description: Crea una nota de crÃ©dito y envÃ­a al SRI
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateCreditNote"
+        required: true
+      responses:
+        "201":
+          description: Nota de crÃ©dito creada y enviada con Ã©xito
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SuccessCreditNote"
+        "400":
+          description: PeticiÃ³n mal realizada
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BadRequest"
+        "401":
+          description: AutenticaciÃ³n incorrecta
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Unauthorized"
+        "404":
+          description: Recurso no encontrado
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/NotFound"
+        "422":
+          description: ValidaciÃ³n de datos
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ValidationFailed"
+        "500":
+          description: Error en el servidor
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ServerError"
+      security:
+        - bearerAuth: []
+    get:
+      tags:
+        - Notas de crÃ©dito
+      summary: InformaciÃ³n de la nota de crÃ©dito
+      description: Retorna la informaciÃ³n de la nota de crÃ©dito donde se puede validar el estado de la misma
+      parameters:
+        - name: integration
+          in: query
+          description: ParÃ¡metro para la integraciÃ³n enviar true
+          required: true
+          schema:
+            type: boolean
+          example: true
+        - name: authorization_number
+          in: query
+          description: Clave de autorizaciÃ³n
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Retorna la informaciÃ³n de la nota de crÃ©dito
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CreditNote"
+        "400":
+          description: PeticiÃ³n mal realizada
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BadRequest"
+        "401":
+          description: AutenticaciÃ³n incorrecta
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Unauthorized"
+        "404":
+          description: Recurso no encontrado
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/NotFound"
+        "500":
+          description: Error en el servidor
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ServerError"
+      security:
+        - bearerAuth: []
+  /debit-notes:
+    post:
+      tags:
+        - Notas de dÃ©bito
+      summary: Crear nota de dÃ©bito
+      description: Crea una nota de dÃ©bito y envÃ­a al SRI
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateDebitNote"
+        required: true
+      responses:
+        "201":
+          description: Nota de dÃ©bito creada y enviada con Ã©xito
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SuccessDebitNote"
+        "400":
+          description: PeticiÃ³n mal realizada
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BadRequest"
+        "401":
+          description: AutenticaciÃ³n incorrecta
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Unauthorized"
+        "404":
+          description: Recurso no encontrado
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/NotFound"
+        "422":
+          description: ValidaciÃ³n de datos
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ValidationFailed"
+        "500":
+          description: Error en el servidor
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ServerError"
+      security:
+        - bearerAuth: []
+    get:
+      tags:
+        - Notas de dÃ©bito
+      summary: InformaciÃ³n de la nota de dÃ©bito
+      description: Retorna la informaciÃ³n de la nota de dÃ©bito donde se puede validar el estado de la misma
+      parameters:
+        - name: integration
+          in: query
+          description: ParÃ¡metro para la integraciÃ³n enviar true
+          required: true
+          schema:
+            type: boolean
+          example: true
+        - name: authorization_number
+          in: query
+          description: Clave de autorizaciÃ³n
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Retorna la informaciÃ³n de la nota de dÃ©bito
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DebitNote"
+        "400":
+          description: PeticiÃ³n mal realizada
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BadRequest"
+        "401":
+          description: AutenticaciÃ³n incorrecta
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Unauthorized"
+        "404":
+          description: Recurso no encontrado
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/NotFound"
+        "500":
+          description: Error en el servidor
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ServerError"
+      security:
+        - bearerAuth: []
+  /purchase-settlements:
+    post:
+      tags:
+        - Liquidaciones de compra
+      summary: Crear liquidaciÃ³n de compra
+      description: Crea una liquidaciÃ³n de compra y envÃ­a al SRI
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreatePurchaseSettlement"
+        required: true
+      responses:
+        "201":
+          description: LiquidaciÃ³n de compra creada y enviada con Ã©xito
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SuccessPurchaseSettlement"
+        "400":
+          description: PeticiÃ³n mal realizada
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BadRequest"
+        "401":
+          description: AutenticaciÃ³n incorrecta
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Unauthorized"
+        "404":
+          description: Recurso no encontrado
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/NotFound"
+        "422":
+          description: ValidaciÃ³n de datos
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ValidationFailed"
+        "500":
+          description: Error en el servidor
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ServerError"
+      security:
+        - bearerAuth: []
+    get:
+      tags:
+        - Liquidaciones de compra
+      summary: InformaciÃ³n de la liquidaciÃ³n de compra
+      description: Retorna la informaciÃ³n de la liquidaciÃ³n de compra donde se puede validar el estado de la misma
+      parameters:
+        - name: integration
+          in: query
+          description: ParÃ¡metro para la integraciÃ³n enviar true
+          required: true
+          schema:
+            type: boolean
+          example: true
+        - name: authorization_number
+          in: query
+          description: Clave de autorizaciÃ³n
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Retorna la informaciÃ³n de la liquidaciÃ³n de compra
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PurchaseSettlement"
+        "400":
+          description: PeticiÃ³n mal realizada
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BadRequest"
+        "401":
+          description: AutenticaciÃ³n incorrecta
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Unauthorized"
+        "404":
+          description: Recurso no encontrado
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/NotFound"
+        "500":
+          description: Error en el servidor
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ServerError"
+      security:
+        - bearerAuth: []
+  /retentions:
+    post:
+      tags:
+        - Retenciones
+      summary: Crear RetenciÃ³n
+      description: Crea una retenciÃ³n y envÃ­a al SRI
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateRetention"
+        required: true
+      responses:
+        "201":
+          description: RetenciÃ³n creada y enviada con Ã©xito
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SuccessRetention"
+        "400":
+          description: PeticiÃ³n mal realizada
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BadRequest"
+        "401":
+          description: AutenticaciÃ³n incorrecta
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Unauthorized"
+        "404":
+          description: Recurso no encontrado
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/NotFound"
+        "422":
+          description: ValidaciÃ³n de datos
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ValidationFailed"
+        "500":
+          description: Error en el servidor
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ServerError"
+      security:
+        - bearerAuth: []
+    get:
+      tags:
+        - Retenciones
+      summary: InformaciÃ³n de la rentenciÃ³n
+      description: Retorna la informaciÃ³n de la retenciÃ³n donde se puede validar el estado de la misma
+      parameters:
+        - name: integration
+          in: query
+          description: ParÃ¡metro para la integraciÃ³n enviar true
+          required: true
+          schema:
+            type: boolean
+          example: true
+        - name: authorization_number
+          in: query
+          description: Clave de autorizaciÃ³n
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Retorna la informaciÃ³n de la retenciÃ³n
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Retention"
+        "400":
+          description: PeticiÃ³n mal realizada
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BadRequest"
+        "401":
+          description: AutenticaciÃ³n incorrecta
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Unauthorized"
+        "404":
+          description: Recurso no encontrado
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/NotFound"
+        "500":
+          description: Error en el servidor
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ServerError"
+      security:
+        - bearerAuth: []
+  /waybills:
+    post:
+      tags:
+        - GuÃ­as de remisiÃ³n
+      summary: Crear guÃ­a de remisiÃ³n
+      description: Crea una guÃ­a de remisiÃ³n y envÃ­a al SRI
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateWaybill"
+        required: true
+      responses:
+        "201":
+          description: GuÃ­a de remisiÃ³n creada y enviada con Ã©xito
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SuccessWaybill"
+        "400":
+          description: PeticiÃ³n mal realizada
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BadRequest"
+        "401":
+          description: AutenticaciÃ³n incorrecta
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Unauthorized"
+        "404":
+          description: Recurso no encontrado
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/NotFound"
+        "422":
+          description: ValidaciÃ³n de datos
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ValidationFailed"
+        "500":
+          description: Error en el servidor
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ServerError"
+      security:
+        - bearerAuth: []
+    get:
+      tags:
+        - GuÃ­as de remisiÃ³n
+      summary: InformaciÃ³n de la guÃ­a de remisiÃ³n
+      description: Retorna la informaciÃ³n de la guÃ­a de remisiÃ³n donde se puede validar el estado de la misma
+      parameters:
+        - name: integration
+          in: query
+          description: ParÃ¡metro para la integraciÃ³n enviar true
+          required: true
+          schema:
+            type: boolean
+          example: true
+        - name: authorization_number
+          in: query
+          description: Clave de autorizaciÃ³n
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Retorna la informaciÃ³n de la guÃ­a de remisiÃ³n
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Waybill"
+        "400":
+          description: PeticiÃ³n mal realizada
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BadRequest"
+        "401":
+          description: AutenticaciÃ³n incorrecta
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Unauthorized"
+        "404":
+          description: Recurso no encontrado
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/NotFound"
+        "500":
+          description: Error en el servidor
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ServerError"
+      security:
+        - bearerAuth: []
+  /electronic-vouchers/download-ride:
+    get:
+      tags:
+        - Descargar PDF
+      summary: Descarga PDF
+      description: Descarga documentos en formato PDF de los documentos electrÃ³nicos
+      parameters:
+        - name: id
+          in: query
+          description: Clave de acceso del documento electrÃ³nico
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Retorna el archivo PDF en base 64
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DownloadRide"
+        "400":
+          description: PeticiÃ³n mal realizada
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BadRequest"
+        "401":
+          description: AutenticaciÃ³n incorrecta
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Unauthorized"
+        "404":
+          description: Recurso no encontrado
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/NotFound"
+        "500":
+          description: Error en el servidor
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ServerError"
+      security:
+        - bearerAuth: []
+  /electronic-vouchers/download-xml:
+    get:
+      tags:
+        - Descargar XML
+      summary: Descarga XML
+      description: Descarga documentos en formato XML de los documentos electrÃ³nicos
+      parameters:
+        - name: id
+          in: query
+          description: Clave de acceso del documento electrÃ³nico
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Retorna el archivo XML en base 64
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DownloadXml"
+        "400":
+          description: PeticiÃ³n mal realizada
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BadRequest"
+        "401":
+          description: AutenticaciÃ³n incorrecta
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Unauthorized"
+        "404":
+          description: Recurso no encontrado
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/NotFound"
+        "500":
+          description: Error en el servidor
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ServerError"
+      security:
+        - bearerAuth: []
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+  schemas:
+    CreateInvoice:
+      type: object
+      required:
+        - integration
+        - issue_point_code
+        - establishment_code
+        - issued_on
+        - payment_method_term
+        - payment_method_code
+        - payment_method_time
+        - line_items
+      properties:
+        integration:
+          type: boolean
+          description: ParÃ¡metro para la integraciÃ³n enviar true
+        issue_point_code:
+          type: string
+          description: Punto de emisiÃ³n
+          example: "001"
+        establishment_code:
+          type: string
+          description: CÃ³digo del establecimiento
+          example: "001"
+        issued_on:
+          type: string
+          description: Fecha de emisiÃ³n (YYY-mm-dd)
+          example: "2023-03-09"
+        third:
+          type: object
+          required:
+            - document
+            - name
+            - email
+            - phones
+            - address
+          properties:
+            name:
+              type: string
+              description: Nombre del cliente
+              example: Viviana Peluche
+            document:
+              type: string
+              description: IdentificaciÃ³n del cliente
+              example: "1723358400"
+            email:
+              type: string
+              description: Correo electrÃ³nico del cliente
+              example: test@gmail.com
+            phones:
+              type: string
+              description: TelÃ©fono del cliente
+              example: "0987569852"
+            address:
+              type: string
+              description: DirecciÃ³n del cliente
+              example: Av. Siempre Viva
+          description: Datos del cliente, si se desea factura a cliente final no enviar este parÃ¡metro
+        document_number:
+          type: string
+          description: NÃºmero secuencial del documento electrÃ³nico
+          example:
+        payment_method_code:
+          type: string
+          description: CÃ³digo de forma pago del SRI [Tabla 1](https://services.abitmedia.cloud/docs/pdf/formas-pago.pdf).
+
+          example: "18"
+        payment_method_term:
+          type: string
+          description: Plazo de la forma de pago
+          example: 6
+        payment_method_time:
+          type: string
+          enum:
+            - days
+            - months
+            - years
+          description: Tiempo de la forma de pago
+          example: months
+        line_items:
+          type: array
+          items:
+            type: object
+            required:
+              - code
+              - description
+              - quantity
+              - unit_cost
+              - taxes
+            properties:
+              code:
+                type: string
+                description: Identificador
+                example: "ABC123"
+              description:
+                type: string
+                description: DescripciÃ³n/nombre
+                example: AzÃºcar valle
+              quantity:
+                type: number
+                description: Cantidad
+                example: 2
+              unit_cost:
+                type: number
+                description: Precio unitario sin iva
+                example: 1
+              discount:
+                type: number
+                description: Descuento en valor
+                example: 0
+              taxes:
+                type: array
+                items:
+                  type: string
+                  description: Impuesto a aplicar <br>IVA 15% => 4 <br>IVA 0 => 0 <br>IVA 8% => 8
+                example: ["0"]
+          description: Detalle de los items de la factura
+        additional_fields:
+          type: array
+          items:
+            type: object
+            required:
+              - name
+              - value
+            properties:
+              name:
+                type: string
+                description: Identificador
+                example: "Placa"
+              value:
+                type: string
+                description: Valor del identificador
+                example: "PCB-5624"
+          description: InformaciÃ³n adicional de la factura
+    CreateCreditNote:
+      type: object
+      required:
+        - integration
+        - issue_point_code
+        - establishment_code
+        - issued_on
+        - reference_issued_on
+        - reason
+        - reference_document_number
+        - third
+        - line_items
+      properties:
+        integration:
+          type: boolean
+          description: ParÃ¡metro para la integraciÃ³n enviar true
+        issue_point_code:
+          type: string
+          description: Punto de emisiÃ³n
+          example: "001"
+        establishment_code:
+          type: string
+          description: CÃ³digo del establecimiento
+          example: "001"
+        document_number:
+          type: string
+          description: NÃºmero secuencial del documento electrÃ³nico
+          example:
+        issued_on:
+          type: string
+          description: Fecha de emisiÃ³n (YYY-mm-dd)
+          example: "2023-03-10"
+        reference_issued_on:
+          type: string
+          description: Fecha de emisiÃ³n de referencia (YYY-mm-dd)
+          example: "2023-03-05"
+        reason:
+          type: string
+          description: Motivo para generar nota de crÃ©dito
+          example: "devoluciÃ³n de producto"
+        reference_document_number:
+          type: string
+          description: NÃºmero de referencia del documento
+          example: "001-001-000056522"
+        third:
+          type: object
+          required:
+            - name
+            - document
+            - email
+            - address
+            - phones
+          properties:
+            name:
+              type: string
+              description: Nombre del cliente
+              example: Viviana Peluche
+            document:
+              type: string
+              description: IdentificaciÃ³n del cliente
+              example: "1727374757"
+            email:
+              type: string
+              description: Correo electrÃ³nico del cliente
+              example: test@gmail.com
+            address:
+              type: string
+              description: DirecciÃ³n del cliente
+              example: Av. Siempre Viva
+            phones:
+              type: string
+              description: TelÃ©fono del cliente
+              example: "0987569852"
+        line_items:
+          type: array
+          items:
+            type: object
+            required:
+              - code
+              - description
+              - quantity
+              - unit_cost
+              - taxes
+            properties:
+              code:
+                type: string
+                description: Identificador
+                example: "2ivdln4"
+              description:
+                type: string
+                description: DescripciÃ³n/nombre
+                example: AzÃºcar valle
+              quantity:
+                type: number
+                description: Cantidad
+                example: 1
+              unit_cost:
+                type: number
+                description: Precio unitario sin iva
+                example: 1.50
+              discount:
+                type: number
+                description: Descuento en valor
+                example: 0
+              taxes:
+                type: array
+                items:
+                  type: string
+                  description: Impuesto a aplicar <br>IVA 15% => 4 <br>IVA 0 => 0 <br>IVA 8% => 8
+                example: ["0"]
+          description: Detalle de los items de la nota de crÃ©dito
+        additional_fields:
+          type: array
+          items:
+            type: object
+            required:
+              - name
+              - value
+            properties:
+              name:
+                type: string
+                description: Identificador
+                example: "Placa"
+              value:
+                type: string
+                description: Valor del identificador
+                example: "PCB-5624"
+          description: InformaciÃ³n adicional de la nota de crÃ©dito
+    CreateDebitNote:
+      type: object
+      required:
+        - integration
+        - issue_point_code
+        - establishment_code
+        - issued_on
+        - reference_issued_on
+        - reference_document_number
+        - payment_method_term
+        - payment_method_code
+        - payment_method_time
+        - third
+        - line_items
+      properties:
+        integration:
+          type: boolean
+          description: ParÃ¡metro para la integraciÃ³n enviar true
+        issue_point_code:
+          type: string
+          description: Punto de emisiÃ³n
+          example: "001"
+        establishment_code:
+          type: string
+          description: CÃ³digo del establecimiento
+          example: "001"
+        document_number:
+          type: string
+          description: NÃºmero secuencial del documento electrÃ³nico
+          example:
+        issued_on:
+          type: string
+          description: Fecha de emisiÃ³n (YYY-mm-dd)
+          example: "2023-03-10"
+        reference_issued_on:
+          type: string
+          description: Fecha de emisiÃ³n de referencia (YYY-mm-dd)
+          example: "2023-03-05"
+        reference_document_number:
+          type: string
+          description: NÃºmero de referencia del documento
+          example: "001-001-000056522"
+        payment_method_code:
+          type: string
+          description: CÃ³digo de forma pago del SRI [Tabla 1](https://services.abitmedia.cloud/docs/pdf/formas-pago.pdf).
+          example: "18"
+        payment_method_term:
+          type: string
+          description: Plazo de la forma de pago
+          example: 6
+        payment_method_time:
+          type: string
+          enum:
+            - days
+            - months
+            - years
+          description: Tiempo de la forma de pago
+          example: months
+        third:
+          type: object
+          required:
+            - name
+            - document
+            - email
+            - address
+            - phones
+          properties:
+            name:
+              type: string
+              description: Nombre del cliente
+              example: Viviana Peluche
+            document:
+              type: string
+              description: IdentificaciÃ³n del cliente
+              example: "1727374757"
+            email:
+              type: string
+              description: Correo electrÃ³nico del cliente
+              example: test@gmail.com
+            address:
+              type: string
+              description: DirecciÃ³n del cliente
+              example: Av. Siempre Viva
+            phones:
+              type: string
+              description: TelÃ©fono del cliente
+              example: "0987569852"
+        line_items:
+          type: array
+          items:
+            type: object
+            required:
+              - code
+              - description
+              - quantity
+              - unit_cost
+              - taxes
+            properties:
+              code:
+                type: string
+                description: Identificador
+                example: "2ivdln4"
+              description:
+                type: string
+                description: DescripciÃ³n/nombre
+                example: AzÃºcar valle
+              quantity:
+                type: number
+                description: Cantidad
+                example: 1
+              unit_cost:
+                type: number
+                description: Precio unitario sin iva
+                example: 1.50
+              discount:
+                type: number
+                description: Descuento en valor
+                example: 0
+              taxes:
+                type: array
+                items:
+                  type: string
+                  description: Impuesto a aplicar <br>IVA 15% => 4 <br>IVA 0 => 0 <br>IVA 8% => 8
+                example: ["0"]
+          description: Detalle de los items de la nota de dÃ©bito
+        additional_fields:
+          type: array
+          items:
+            type: object
+            required:
+              - name
+              - value
+            properties:
+              name:
+                type: string
+                description: Identificador
+                example: "Placa"
+              value:
+                type: string
+                description: Valor del identificador
+                example: "PCB-5624"
+          description: InformaciÃ³n adicional de la nota de dÃ©bito
+    CreatePurchaseSettlement:
+      type: object
+      required:
+        - integration
+        - issue_point_code
+        - establishment_code
+        - issued_on
+        - payment_method_term
+        - payment_method_code
+        - payment_method_time
+        - third
+        - line_items
+      properties:
+        integration:
+          type: boolean
+          description: ParÃ¡metro para la integraciÃ³n enviar true
+        issue_point_code:
+          type: string
+          description: Punto de emisiÃ³n
+          example: "001"
+        establishment_code:
+          type: string
+          description: CÃ³digo del establecimiento
+          example: "001"
+        document_number:
+          type: string
+          description: NÃºmero secuencial del documento electrÃ³nico
+          example:
+        issued_on:
+          type: string
+          description: Fecha de emisiÃ³n (YYY-mm-dd)
+          example: "2023-03-10"
+        payment_method_term:
+          type: string
+          description: Plazo de la forma de pago
+          example: 6
+        payment_method_code:
+          type: string
+          description: CÃ³digo de forma pago del SRI [Tabla 1](https://services.abitmedia.cloud/docs/pdf/formas-pago.pdf).
+          example: "18"
+        payment_method_time:
+          type: string
+          enum:
+            - days
+            - months
+            - years
+          description: Tiempo de la forma de pago
+          example: months
+        third:
+          type: object
+          required:
+            - name
+            - document
+            - email
+            - address
+            - phones
+          properties:
+            name:
+              type: string
+              description: Nombre del cliente
+              example: Viviana Peluche
+            document:
+              type: string
+              description: IdentificaciÃ³n del cliente
+              example: "1727374757"
+            email:
+              type: string
+              description: Correo electrÃ³nico del cliente
+              example: test@gmail.com
+            address:
+              type: string
+              description: DirecciÃ³n del cliente
+              example: Av. Siempre Viva
+            phones:
+              type: string
+              description: TelÃ©fono del cliente
+              example: "0987569852"
+        line_items:
+          type: array
+          items:
+            type: object
+            required:
+              - code
+              - description
+              - quantity
+              - unit_cost
+              - taxes
+            properties:
+              code:
+                type: string
+                description: Identificador
+                example: "2ivdln4"
+              description:
+                type: string
+                description: DescripciÃ³n/nombre
+                example: AzÃºcar valle
+              quantity:
+                type: number
+                description: Cantidad
+                example: 1
+              unit_cost:
+                type: number
+                description: Precio unitario sin iva
+                example: 1.50
+              discount:
+                type: number
+                description: Descuento en valor
+                example: 0
+              taxes:
+                type: array
+                items:
+                  type: string
+                  description: Impuesto a aplicar <br>IVA 15% => 4 <br>IVA 0 => 0 <br>IVA 8% => 8
+                example: ["0"]
+          description: Detalle de los items de la liquidaciÃ³n de compra
+        additional_fields:
+          type: array
+          items:
+            type: object
+            required:
+              - name
+              - value
+            properties:
+              name:
+                type: string
+                description: Identificador
+                example: "Placa"
+              value:
+                type: string
+                description: Identificador
+                example: "PCB-5624"
+          description: InformaciÃ³n adicional de la liquidaciÃ³n de compra
+    CreateRetention:
+      type: object
+      required:
+        - integration
+        - issue_point_code
+        - establishment_code
+        - issued_on
+        - reference_issued_on
+        - reference_document_number
+        - subtotal
+        - value_added_tax
+        - third
+        - retention_details
+      properties:
+        integration:
+          type: boolean
+          description: ParÃ¡metro para la integraciÃ³n enviar true
+        issue_point_code:
+          type: string
+          description: Punto de emisiÃ³n
+          example: "001"
+        establishment_code:
+          type: string
+          description: CÃ³digo del establecimiento
+          example: "001"
+        document_number:
+          type: string
+          description: NÃºmero secuencial del documento electrÃ³nico
+          example:
+        issued_on:
+          type: string
+          description: Fecha de emisiÃ³n (YYY-mm-dd)
+          example: "2023-03-10"
+        reference_issued_on:
+          type: string
+          description: Fecha de emisiÃ³n de referencia (YYY-mm-dd)
+          example: "2023-03-05"
+        reference_document_number:
+          type: string
+          description: NÃºmero de referencia del documento
+          example: "001-005-000008545"
+        subtotal:
+          type: number
+          description: Es el subtotal de la factura a retener
+          example: 5
+        value_added_tax:
+          type: number
+          description: Valor de IVA de la factura a retener
+          example: 0
+        third:
+          type: object
+          required:
+            - name
+            - document
+            - email
+            - address
+            - phones
+          properties:
+            name:
+              type: string
+              description: Nombre del cliente
+              example: Viviana Peluche
+            document:
+              type: string
+              description: IdentificaciÃ³n del cliente
+              example: "1727374757"
+            email:
+              type: string
+              description: Correo electrÃ³nico del cliente
+              example: test@gmail.com
+            address:
+              type: string
+              description: DirecciÃ³n del cliente
+              example: Av. Siempre Viva
+            phones:
+              type: string
+              description: TelÃ©fono del cliente
+              example: "0987569852"
+        retention_details:
+          type: array
+          items:
+            type: object
+            required:
+              - tax_id
+              - retention_type
+              - tax_base
+              - reference_document_code
+              - reference_document_number
+              - reference_document_date
+            properties:
+              tax_id:
+                type: string
+                description: CÃ³digo del impuesto del SRI revisar [Tabla 2](https://services.abitmedia.cloud/docs/pdf/tipos-impuestos.pdf).
+                example: "3440"
+              retention_type:
+                type: number
+                description: Tipo de retenciÃ³n <br>IVA=2 <br>RENTA=1
+                example: 1
+              tax_base:
+                type: number
+                description: Base a retener
+                example: 85
+              reference_document_code:
+                type: string
+                description: NÃºmero de cÃ³digo de Documento revisar [Tabla 3](https://services.abitmedia.cloud/docs/pdf/tipos-documentos.pdf).
+                example: "01"
+              reference_document_number:
+                type: string
+                description: NÃºmero de referencia de Documento
+                example: "855-858-494898495"
+              reference_document_date:
+                type: string
+                description: Fecha del documento de referencia
+                example: "2023-03-09"
+          description: Detalle de los items de la retenciÃ³n
+        additional_fields:
+          type: array
+          items:
+            type: object
+            required:
+              - name
+              - value
+            properties:
+              name:
+                type: string
+                description: Identificador
+                example: "Placa"
+              value:
+                type: string
+                description: Identificador
+                example: "PCB-5624"
+          description: InformaciÃ³n adicional de la retenciÃ³n
+    CreateWaybill:
+      type: object
+      required:
+        - integration
+        - issue_point_code
+        - establishment_code
+        - issued_on
+        - shipping_start_date
+        - shipping_end_date
+        - origin_address
+        - car_plate
+        - third
+        - waybill_details
+      properties:
+        integration:
+          type: boolean
+          description: ParÃ¡metro para la integraciÃ³n enviar true
+        issue_point_code:
+          type: string
+          description: Punto de emisiÃ³n
+          example: "001"
+        establishment_code:
+          type: string
+          description: CÃ³digo del establecimiento
+          example: "001"
+        document_number:
+          type: string
+          description: NÃºmero secuencial del documento electrÃ³nico
+          example:
+        issued_on:
+          type: string
+          description: Fecha de emisiÃ³n (YYY-mm-dd)
+          example: "2023-03-07"
+        shipping_start_date:
+          type: string
+          description: Fecha de inicio de enviÃ³ (YYY-mm-dd) (No puede ser mayor a la fecha actual)
+          example: "2023-03-07"
+        shipping_end_date:
+          type: string
+          description: Fecha de fin de enviÃ³ (YYY-mm-dd)
+          example: "2023-03-07"
+        origin_address:
+          type: string
+          description: DirecciÃ³n de origen
+          example: "La mana"
+        car_plate:
+          type: string
+          description: Placa del vehÃ­culo
+          example: "pbc-454"
+        third:
+          type: object
+          required:
+            - name
+            - document
+            - email
+            - address
+            - phones
+          properties:
+            name:
+              type: string
+              description: Nombre del cliente
+              example: Viviana Peluche
+            document:
+              type: string
+              description: IdentificaciÃ³n del cliente
+              example: "1727374757"
+            email:
+              type: string
+              description: Correo electrÃ³nico del cliente
+              example: test@gmail.com
+            address:
+              type: string
+              description: DirecciÃ³n del cliente
+              example: Av. Siempre Viva
+            phones:
+              type: string
+              description: TelÃ©fono del cliente
+              example: "0987569852"
+        waybill_details:
+          type: array
+          items:
+            type: object
+            required:
+              - waybill_details
+              - receiver
+              - reason
+              - route
+              - establishment_code
+              - reference_document_code
+              - reference_document_number
+              - reference_authorization_number
+              - reference_issued_on
+              - line_items
+            properties:
+              receiver:
+                type: object
+                required:
+                  - name
+                  - document
+                  - email
+                  - address
+                  - phones
+                properties:
+                  name:
+                    type: string
+                    description: Nombre del receptor
+                    example: "mario espinale"
+                  document:
+                    type: string
+                    description: IdentificaciÃ³n del receptor
+                    example: "1785425632"
+                  email:
+                    type: string
+                    description: Correo electrÃ³nico del receptor
+                    example: "mario@gmail.com"
+                  address:
+                    type: string
+                    description: DirecciÃ³n del receptor
+                    example: "san jaun"
+                  phones:
+                    type: string
+                    description: TelÃ©fono del receptor
+                    example: "0959714449"
+              reason:
+                type: string
+                description: Motivo para traslado
+                example: "Traspaso de bodega"
+              route:
+                type: string
+                description: Ruta de traslado
+                example: "La mana - Quito"
+              establishment_code:
+                type: string
+                description: CÃ³digo del establecimiento
+                example: "001"
+              dau:
+                type: string
+                description: Documento aduanero, Si no se utiliza este campo se debe mandar 0
+                example: "0"
+              reference_document_code:
+                type: string
+                description: NÃºmero de cÃ³digo de Documento revisar [Tabla 3](https://services.abitmedia.cloud/docs/pdf/tipos-documentos.pdf).
+                example: "01"
+              reference_document_number:
+                type: string
+                description: NÃºmero de referencia de Documento
+                example: "001-010-101010110"
+              reference_authorization_number:
+                type: string
+                description: NÃºmero de autorizaciÃ³n de referencia, Si no se utiliza este campo se debe mandar 49 ceros por defecto
+                example: "0000000000000000000000000000000000000000000000000"
+              reference_issued_on:
+                type: string
+                description: Fecha de la referencia
+                example: "2023-03-10"
+              line_items:
+                type: array
+                items:
+                  type: object
+                  required:
+                    - code
+                    - description
+                    - quantity
+                  properties:
+                    code:
+                      type: string
+                      description: Identificador
+                      example: "ABC123"
+                    aux_code:
+                      type: string
+                      description: Identificador auxiliar
+                      example:
+                    description:
+                      type: number
+                      description: DescripciÃ³n/nombre
+                      example: "JABON LIQUIDO"
+                    quantity:
+                      type: number
+                      description: Cantidad
+                      example: 1
+          description: Detalle de la guÃ­a de remisiÃ³n
+    SuccessInvoice:
+      type: object
+      properties:
+        success:
+          type: boolean
+          description: Bandera que nos indica el estado de la peticiÃ³n
+          example: false
+        status:
+          type: number
+          format: int
+          description: CÃ³digo de respuesta del servidor
+          example: 201
+        message:
+          type: string
+          description: Mensaje del servidor
+          example: Factura creada y firmada exitosamente, se envio al SRI
+        data:
+          type: object
+          properties:
+            establishment_code:
+              type: string
+              description: CÃ³digo del establecimiento
+              example: "001"
+            issue_point_code:
+              type: string
+              description: Punto de emisiÃ³n
+              example: "001"
+            document_number:
+              type: string
+              description: Secuencial de factura
+              example: "000000012"
+            status:
+              type: number
+              description: Estado de la factura
+              example: 4
+            authorization_number:
+              type: string
+              description: Clave de acceso
+              example: "3303202301179319143000110010010000006801234567811"
+          description: Array con mensajes de errores de validaciÃ³n
+    SuccessCreditNote:
+      type: object
+      properties:
+        success:
+          type: boolean
+          description: Bandera que nos indica el estado de la peticiÃ³n
+          example: false
+        status:
+          type: number
+          format: int
+          description: CÃ³digo de respuesta del servidor
+          example: 201
+        message:
+          type: string
+          description: Mensaje del servidor
+          example: Nota de crÃ©dito creada y firmada exitosamente, se envio al SRI
+        data:
+          type: object
+          properties:
+            establishment_code:
+              type: string
+              description: CÃ³digo del establecimiento
+              example: "001"
+            issue_point_code:
+              type: string
+              description: Punto de emisiÃ³n
+              example: "001"
+            document_number:
+              type: string
+              description: Secuencial de nota de crÃ©dito
+              example: "000000012"
+            status:
+              type: number
+              description: Estado de la nota de crÃ©dito
+              example: 4
+            authorization_number:
+              type: string
+              description: Clave de acceso
+              example: "3303202301179319143000110010010000006801234567811"
+          description: Array con mensajes de errores de validaciÃ³n
+    SuccessDebitNote:
+      type: object
+      properties:
+        success:
+          type: boolean
+          description: Bandera que nos indica el estado de la peticiÃ³n
+          example: false
+        status:
+          type: number
+          format: int
+          description: CÃ³digo de respuesta del servidor
+          example: 201
+        message:
+          type: string
+          description: Mensaje del servidor
+          example: Nota de dÃ©bito creada y firmada exitosamente, se envio al SRI
+        data:
+          type: object
+          properties:
+            establishment_code:
+              type: string
+              description: CÃ³digo del establecimiento
+              example: "001"
+            issue_point_code:
+              type: string
+              description: Punto de emisiÃ³n
+              example: "001"
+            document_number:
+              type: string
+              description: Secuencial de la nota de dÃ©bito
+              example: "000000012"
+            status:
+              type: number
+              description: Estado de la nota de dÃ©bito
+              example: 4
+            authorization_number:
+              type: string
+              description: Clave de acceso
+              example: "3303202301179319143000110010010000006801234567811"
+          description: Array con mensajes de errores de validaciÃ³n
+    SuccessPurchaseSettlement:
+      type: object
+      properties:
+        success:
+          type: boolean
+          description: Bandera que nos indica el estado de la peticiÃ³n
+          example: false
+        status:
+          type: number
+          format: int
+          description: CÃ³digo de respuesta del servidor
+          example: 201
+        message:
+          type: string
+          description: Mensaje del servidor
+          example: LiquidaciÃ³n de compra creada y firmada exitosamente, se envio al SRI
+        data:
+          type: object
+          properties:
+            establishment_code:
+              type: string
+              description: CÃ³digo del establecimiento
+              example: "001"
+            issue_point_code:
+              type: string
+              description: Punto de emisiÃ³n
+              example: "001"
+            document_number:
+              type: string
+              description: Secuencial de la liquidaciÃ³n de compra
+              example: "000000012"
+            status:
+              type: number
+              description: Estado de la liquidaciÃ³n de compra
+              example: 4
+            authorization_number:
+              type: string
+              description: Clave de acceso
+              example: "3303202301179319143000110010010000006801234567811"
+          description: Array con mensajes de errores de validaciÃ³n
+    SuccessRetention:
+      type: object
+      properties:
+        success:
+          type: boolean
+          description: Bandera que nos indica el estado de la peticiÃ³n
+          example: false
+        status:
+          type: number
+          format: int
+          description: CÃ³digo de respuesta del servidor
+          example: 201
+        message:
+          type: string
+          description: Mensaje del servidor
+          example: RetenciÃ³n creada y firmada exitosamente, se envio al SRI
+        data:
+          type: object
+          properties:
+            establishment_code:
+              type: string
+              description: CÃ³digo del establecimiento
+              example: "001"
+            issue_point_code:
+              type: string
+              description: Punto de emisiÃ³n
+              example: "001"
+            document_number:
+              type: string
+              description: Secuencial de la retenciÃ³n
+              example: "000000012"
+            status:
+              type: number
+              description: Estado de la retenciÃ³n
+              example: 4
+            authorization_number:
+              type: string
+              description: Clave de acceso
+              example: "0703202307171779743300110010010000020131234567818"
+          description: Array con mensajes de errores de validaciÃ³n
+    SuccessWaybill:
+      type: object
+      properties:
+        success:
+          type: boolean
+          description: Bandera que nos indica el estado de la peticiÃ³n
+          example: false
+        status:
+          type: number
+          format: int
+          description: CÃ³digo de respuesta del servidor
+          example: 201
+        message:
+          type: string
+          description: Mensaje del servidor
+          example: GuÃ­a de remisiÃ³n creada y firmada exitosamente, se envio al SRI
+        data:
+          type: object
+          properties:
+            establishment_code:
+              type: string
+              description: CÃ³digo del establecimiento
+              example: "001"
+            issue_point_code:
+              type: string
+              description: Punto de emisiÃ³n
+              example: "001"
+            document_number:
+              type: string
+              description: Secuencial de la guÃ­a de remisiÃ³n
+              example: "000000018"
+            status:
+              type: number
+              description: Estado de la guÃ­a de remisiÃ³n
+              example: 4
+            authorization_number:
+              type: string
+              description: Clave de acceso
+              example: "0703202307171779743300110010010000020131234567818"
+          description: Array con mensajes de errores de validaciÃ³n
+    Invoice:
+      type: object
+      properties:
+        success:
+          type: boolean
+          description: Bandera que nos indica el estado de la peticiÃ³n
+          example: false
+        status:
+          type: number
+          format: int
+          description: CÃ³digo de respuesta del servidor
+          example: 201
+        data:
+          type: object
+          properties:
+            establishment_code:
+              type: string
+              description: CÃ³digo del establecimiento
+              example: "001"
+            issue_point_code:
+              type: string
+              description: Punto de emisiÃ³n
+              example: "001"
+            issued_on:
+              type: string
+              description: Fecha de emisiÃ³n
+              example: "2023-03-09"
+            total:
+              type: string
+              description: Total
+              example: "20.36"
+            document_number:
+              type: string
+              description: Secuencial de factura
+              example: "000000012"
+            status:
+              type: number
+              description: Estado de la factura
+              example: 4
+            authorization_number:
+              type: string
+              description: Clave de acceso
+              example: "3303202301179319143000110010010000006801234567811"
+            authorization_message:
+              type: string
+              description: Mensaje SRI
+              example: "Firmado"
+            created_at:
+              type: string
+              description: Fecha creaciÃ³n
+              example: "2023-03-10 13:00:41"
+            updated_at:
+              type: string
+              description: Fecha actualizaciÃ³n
+              example: "2023-03-10 13:00:41"
+          description: Array con mensajes de errores de validaciÃ³n
+    CreditNote:
+      type: object
+      properties:
+        success:
+          type: boolean
+          description: Bandera que nos indica el estado de la peticiÃ³n
+          example: false
+        status:
+          type: number
+          format: int
+          description: CÃ³digo de respuesta del servidor
+          example: 201
+        data:
+          type: object
+          properties:
+            establishment_code:
+              type: string
+              description: CÃ³digo del establecimiento
+              example: "001"
+            issue_point_code:
+              type: string
+              description: Punto de emisiÃ³n
+              example: "001"
+            issued_on:
+              type: string
+              description: Fecha de emisiÃ³n
+              example: "2023-03-10"
+            total:
+              type: string
+              description: Total
+              example: "3"
+            document_number:
+              type: string
+              description: Secuencial de la nota de crÃ©dito
+              example: "000000012"
+            status:
+              type: number
+              description: Estado de la nota de crÃ©dito
+              example: 4
+            authorization_number:
+              type: string
+              description: Clave de acceso
+              example: "3303202301179319143000110010010000006801234567811"
+            authorization_message:
+              type: string
+              description: Mensaje SRI
+              example: "Firmado"
+            created_at:
+              type: string
+              description: Fecha creaciÃ³n
+              example: "2023-03-10 13:00:41"
+            updated_at:
+              type: string
+              description: Fecha actualizaciÃ³n
+              example: "2023-03-10 13:00:41"
+            reference_issued_on:
+              type: string
+              description: Fecha de emisiÃ³n de referencia
+              example: "2023-03-05"
+            reference_document_number:
+              type: string
+              description: NÃºmero de referencia del documento
+              example: "001-001-000056522"
+            reason:
+              type: string
+              description: Motivo de nota de crÃ©dito
+              example: "devoluciÃ³n de producto"
+          description: Array con mensajes de errores de validaciÃ³n
+    DebitNote:
+      type: object
+      properties:
+        success:
+          type: boolean
+          description: Bandera que nos indica el estado de la peticiÃ³n
+          example: false
+        status:
+          type: number
+          format: int
+          description: CÃ³digo de respuesta del servidor
+          example: 201
+        data:
+          type: object
+          properties:
+            establishment_code:
+              type: string
+              description: CÃ³digo del establecimiento
+              example: "001"
+            issue_point_code:
+              type: string
+              description: Punto de emisiÃ³n
+              example: "001"
+            issued_on:
+              type: string
+              description: Fecha de emisiÃ³n
+              example: "2023-03-10"
+            total:
+              type: string
+              description: Total
+              example: "3"
+            document_number:
+              type: string
+              description: Secuencial de la nota de dÃ©bito
+              example: "000000012"
+            status:
+              type: number
+              description: Estado de la nota de dÃ©bito
+              example: 4
+            authorization_number:
+              type: string
+              description: Clave de acceso
+              example: "3303202301179319143000110010010000006801234567811"
+            authorization_message:
+              type: string
+              description: Mensaje SRI
+              example: "Firmado"
+            created_at:
+              type: string
+              description: Fecha creaciÃ³n
+              example: "2023-03-10 13:00:41"
+            updated_at:
+              type: string
+              description: Fecha actualizaciÃ³n
+              example: "2023-03-10 13:00:41"
+            reference_issued_on:
+              type: string
+              description: Fecha de emisiÃ³n de referencia
+              example: "2023-03-05"
+            reference_document_number:
+              type: string
+              description: NÃºmero de referencia del documento
+              example: "001-001-000056522"
+          description: Array con mensajes de errores de validaciÃ³n
+    PurchaseSettlement:
+      type: object
+      properties:
+        success:
+          type: boolean
+          description: Bandera que nos indica el estado de la peticiÃ³n
+          example: false
+        status:
+          type: number
+          format: int
+          description: CÃ³digo de respuesta del servidor
+          example: 201
+        data:
+          type: object
+          properties:
+            establishment_code:
+              type: string
+              description: CÃ³digo del establecimiento
+              example: "001"
+            issue_point_code:
+              type: string
+              description: Punto de emisiÃ³n
+              example: "001"
+            document_number:
+              type: string
+              description: Secuencial de la liquidaciÃ³n de compra
+              example: "000000012"
+            issued_on:
+              type: string
+              description: Fecha de emisiÃ³n
+              example: "2023-03-10"
+            total:
+              type: string
+              description: Total
+              example: "3"
+            status:
+              type: number
+              description: Estado de la liquidaciÃ³n de compra
+              example: 4
+            authorization_number:
+              type: string
+              description: Clave de acceso
+              example: "3303202301179319143000110010010000006801234567811"
+            authorization_message:
+              type: string
+              description: Mensaje SRI
+              example: "Firmado"
+            created_at:
+              type: string
+              description: Fecha creaciÃ³n
+              example: "2023-03-10 13:00:41"
+            updated_at:
+              type: string
+              description: Fecha actualizaciÃ³n
+              example: "2023-03-10 13:00:41"
+          description: Array con mensajes de errores de validaciÃ³n
+    Retention:
+      type: object
+      properties:
+        success:
+          type: boolean
+          description: Bandera que nos indica el estado de la peticiÃ³n
+          example: false
+        status:
+          type: number
+          format: int
+          description: CÃ³digo de respuesta del servidor
+          example: 201
+        data:
+          type: object
+          properties:
+            establishment_code:
+              type: string
+              description: CÃ³digo del establecimiento
+              example: "001"
+            issue_point_code:
+              type: string
+              description: Punto de emisiÃ³n
+              example: "001"
+            issued_on:
+              type: string
+              description: Fecha de emisiÃ³n
+              example: "2023-03-10"
+            document_number:
+              type: string
+              description: Secuencial de RetenciÃ³n
+              example: "000000012"
+            status:
+              type: number
+              description: Estado de la RetenciÃ³n
+              example: 4
+            authorization_number:
+              type: string
+              description: Clave de acceso
+              example: "3303202301179319143000110010010000006801234567811"
+            authorization_message:
+              type: string
+              description: Mensaje SRI
+              example: "Firmado"
+            created_at:
+              type: string
+              description: Fecha creaciÃ³n
+              example: "2023-03-10 13:00:41"
+            updated_at:
+              type: string
+              description: Fecha actualizaciÃ³n
+              example: "2023-03-10 13:00:41"
+          description: Array con mensajes de errores de validaciÃ³n
+    Waybill:
+      type: object
+      properties:
+        success:
+          type: boolean
+          description: Bandera que nos indica el estado de la peticiÃ³n
+          example: false
+        status:
+          type: number
+          format: int
+          description: CÃ³digo de respuesta del servidor
+          example: 201
+        data:
+          type: object
+          properties:
+            establishment_code:
+              type: string
+              description: CÃ³digo del establecimiento
+              example: "001"
+            issue_point_code:
+              type: string
+              description: Punto de emisiÃ³n
+              example: "001"
+            issued_on:
+              type: string
+              description: Fecha de emisiÃ³n
+              example: "2023-03-10"
+            document_number:
+              type: string
+              description: Secuencial de guÃ­a de remisiÃ³n
+              example: "000000012"
+            status:
+              type: number
+              description: Estado de guÃ­a de remisiÃ³n
+              example: 4
+            authorization_number:
+              type: string
+              description: Clave de acceso
+              example: "3303202301179319143000110010010000006801234567811"
+            authorization_message:
+              type: string
+              description: Mensaje SRI
+              example: "Firmado"
+            created_at:
+              type: string
+              description: Fecha creaciÃ³n
+              example: "2023-03-10 13:00:41"
+            updated_at:
+              type: string
+              description: Fecha actualizaciÃ³n
+              example: "2023-03-10 13:00:41"
+          description: Array con mensajes de errores de validaciÃ³n
+    DownloadRide:
+      type: object
+      properties:
+        success:
+          type: boolean
+          description: Bandera que nos indica el estado de la peticiÃ³n
+          example: false
+        status:
+          type: number
+          format: int
+          description: CÃ³digo de respuesta del servidor
+          example: 201
+        data:
+          type: object
+          properties:
+            status:
+              type: string
+              description: Estado de la solicitud
+              example: "OK"
+            despatch:
+              type: string
+              description: Archivo PDF en base 64
+          description: Array con mensajes de errores de validaciÃ³n
+    DownloadXml:
+      type: object
+      properties:
+        success:
+          type: boolean
+          description: Bandera que nos indica el estado de la peticiÃ³n
+          example: false
+        status:
+          type: number
+          format: int
+          description: CÃ³digo de respuesta del servidor
+          example: 201
+        data:
+          type: object
+          properties:
+            status:
+              type: string
+              description: Estado de la solicitud
+              example: "OK"
+            despatch:
+              type: string
+              description: Archivo XML en base 64
+          description: Array con mensajes de errores de validaciÃ³n
+    ValidationFailed:
+      type: object
+      properties:
+        success:
+          type: boolean
+          description: Bandera que nos indica el estado de la peticiÃ³n
+          example: false
+        status:
+          type: number
+          format: int
+          description: CÃ³digo de respuesta del servidor
+          example: 422
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+                description: Nombre del atributo enviado
+                example: issue_point_code
+              message:
+                type: string
+                description: Mensaje de validaciÃ³n del atributo
+                example: Punto de emisiÃ³n no puede estar vacÃ­o
+          description: Array con mensajes de errores de validaciÃ³n
+    NotFound:
+      type: object
+      properties:
+        success:
+          type: boolean
+          description: Bandera que nos indica el estado de la peticiÃ³n
+          example: false
+        status:
+          type: number
+          format: int
+          description: CÃ³digo de respuesta del servidor
+          example: 404
+        message:
+          type: string
+          description: Mensaje del servidor
+          example: Objeto no encontrado
+    ServerError:
+      type: object
+      properties:
+        success:
+          type: boolean
+          description: Bandera que nos indica el estado de la peticiÃ³n
+          example: false
+        status:
+          type: number
+          format: int
+          description: CÃ³digo de respuesta del servidor
+          example: 500
+        message:
+          type: string
+          description: Mensaje del servidor
+          example: Hubo problemas en el servidor
+    Unauthorized:
+      type: object
+      properties:
+        success:
+          type: boolean
+          description: Bandera que nos indica el estado de la peticiÃ³n
+          example: false
+        status:
+          type: number
+          format: int
+          description: CÃ³digo de respuesta del servidor
+          example: 401
+        message:
+          type: string
+          description: Mensaje del servidor
+          example: Credenciales incorrectas
+    BadRequest:
+      type: object
+      properties:
+        success:
+          type: boolean
+          description: Bandera que nos indica el estado de la peticiÃ³n
+          example: false
+        status:
+          type: number
+          format: int
+          description: CÃ³digo de respuesta del servidor
+          example: 400
+        message:
+          type: string
+          description: Mensaje del servidor
+          example: ParÃ¡metros insuficientes
