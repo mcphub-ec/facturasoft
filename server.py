@@ -47,7 +47,7 @@ HTTP_TIMEOUT = float(os.environ.get("FACTURASOFT_HTTP_TIMEOUT", "30"))
 
 mcp = FastMCP(
     "facturasoft",
-    host="0.0.0.0",
+    host=os.getenv("MCP_HOST", "0.0.0.0"),
     instructions=(
         "MCP server for FacturaSoft REST API v1 (abitmedia.cloud) — Ecuador SRI electronic billing. "
         "Supports issuing and querying: Invoices, Credit Notes, Debit Notes, Purchase Settlements, "
@@ -757,4 +757,4 @@ if __name__ == "__main__":
         app = mcp.streamable_http_app()
     else:
         raise ValueError(f"Unknown transport mode: {transport_mode}")
-    uvicorn.run(app, host="0.0.0.0", port=port)
+    uvicorn.run(app, host=os.getenv("MCP_HOST", "0.0.0.0"), port=port)
