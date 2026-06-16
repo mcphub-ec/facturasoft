@@ -747,10 +747,6 @@ if __name__ == "__main__":
     import uvicorn
     import os
 
-    try:
-        import logger
-    except ImportError:
-        pass
 
     port = int(os.getenv("MCP_PORT", 8000))
     transport_mode = os.getenv("MCP_TRANSPORT_MODE", "sse").lower()
